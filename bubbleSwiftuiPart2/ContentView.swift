@@ -68,9 +68,6 @@ struct ContentView: View {
    
 
     
-   
-    
-    
     
     
     var scene: SKScene {
