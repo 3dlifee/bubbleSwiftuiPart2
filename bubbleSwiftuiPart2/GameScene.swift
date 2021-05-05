@@ -29,13 +29,8 @@ class GameScene: SKScene, ObservableObject {
         fatalError("init(coder:) is not supported")
       }
 
-    
-   var theAssetState:bubbleGame = bubbleGame()
+    var theAssetState:bubbleGame = bubbleGame()
 
-   
-    
-    
-    
     var assetBubbleIsShowing = false
     
     let defaults:UserDefaults = UserDefaults.standard
@@ -44,20 +39,14 @@ class GameScene: SKScene, ObservableObject {
     var timerLabel:SKLabelNode = SKLabelNode(fontNamed: "Arial")
     var bubbleLabel:SKLabelNode = SKLabelNode(fontNamed: "Arial")
     var totalBubbleLabel:SKLabelNode = SKLabelNode(fontNamed: "Arial")
-    
     var ruleLabel:SKLabelNode = SKLabelNode(fontNamed: "Arial")
 
-    
-    
     var int = 0
     var nrOfBubbles = 5
     var number = 0
     var randomCount = Int.random(in: 1...3) + 1
     private var lastUpdateTime : TimeInterval = 0
   
-    
-    
-    let backgroundNode = SKSpriteNode()
     
     let background = SKSpriteNode(imageNamed: "bubbleBack")
     let timerCount = SKSpriteNode(imageNamed: "timerCount")
@@ -73,13 +62,12 @@ class GameScene: SKScene, ObservableObject {
     let unFreezeMessage: SKSpriteNode = SKSpriteNode(imageNamed: "assetUnFreeze")
     let trashMessage: SKSpriteNode = SKSpriteNode(imageNamed: "trash")
     
+    // -------music//
     
+    let musicNode = SKAudioNode(fileNamed: "PoolParty.wav")
     
     var arrplayer :[SKSpriteNode] = [SKSpriteNode]()
-    
-    
-    var groups = [String]()
-    
+    var playerNameArr = [String]()
     var theTimer = Timer()
     var secondsLeft = 15
     var startTime = 0
@@ -87,39 +75,41 @@ class GameScene: SKScene, ObservableObject {
     var totalBubblesCatch = 0
     
 //    tang fish
-    
+    let mainTangNumber:SKLabelNode = SKLabelNode(fontNamed: "Arial")
     var tangNumber = 3
     var tangIsShowing = false
     
     var freezeAsaState = true
+    var onAsaState = true
 //    --------unfreeze------
     var unfreezeNumber = 0
     
-    //    purestake
+    //    purestake ------- //
         
-        var ALGOD_API_ADDR="https://testnet-algorand.api.purestake.io/ps2"
-        var ALGOD_API_TOKEN="Gs7Ev71MhdC0jDFmytz98ZLbW9mlDwN95iTJ2ol5"
-        var ALGOD_API_PORT=""
+    var ALGOD_API_ADDR="https://testnet-algorand.api.purestake.io/ps2"
+    var ALGOD_API_TOKEN="Gs---------------------------5"
+    var ALGOD_API_PORT=""
 
-      
         
         @State var teste:String = "Hello"
         @State var resultadoLda:Float = 0
-        
         @State var assetTotal:Int64 = 10000
         @State var assetDecimals:Int64 = 0
         @State var  assetUnitName = "HR"
         @State var  assetName = "Hero"
         @State var  url = "https://www.3dlifestudio.com"
         @State var defaultFrozen = false
+    
+  
        
     
-    
-    
-
-    
-
     override func didMove(to view: SKView) {
+        
+        musicNode.autoplayLooped = true
+        musicNode.isPositional = false
+        // Add the audio the scene
+        addChild(musicNode)
+
 
         self.lastUpdateTime = 0
         
@@ -135,10 +125,7 @@ class GameScene: SKScene, ObservableObject {
         }
         
        
-        
         setupStartButton()
-        
-
         
         background.position = CGPoint(x: 0, y: 0)
         background.name = "background"
@@ -205,13 +192,13 @@ class GameScene: SKScene, ObservableObject {
     
     func UnfreezeASA(){
         
-        if  unfreezeNumber == 4 {
+        if  unfreezeNumber == 4 && onAsaState == false  {
             
             freezeAsaState = false
+            onAsaState = true
             freezeASA()
             unfreezeNumber = 0
             
-//            showUnFreezeMessage()
         }
        
         
@@ -284,6 +271,7 @@ class GameScene: SKScene, ObservableObject {
                         } else if  self.freezeAsaState == false {
                             
                             self.showUnFreezeMessage()
+                            self.freezeAsaState = true
                         }
                         
                         
@@ -310,52 +298,32 @@ class GameScene: SKScene, ObservableObject {
     }
 
     
-    
-    
-    
-    
     func addTimeBonus() {
-        
         
         secondsLeft = secondsLeft + 5
         defaults.set( secondsLeft, forKey: "increaseTime")
-        
-        
         self.startTime = self.defaults.integer(forKey: "increaseTime")
-        
         self.timerLabel.text = "\(self.startTime)"
-        
-        
-        
+     
     }
     
     func unlockAsset() {
-        
-        
-        
+       
         theAssetState.add(assetStateChange: false)
-        
         self.horseAsset = false
     }
-    
-    
-    
+  
     func setupStartButton() {
         
         ruleLabel.text = "Touch the Seahorse balls in descending order."
         ruleLabel.fontSize = 18
-        
         ruleLabel.fontColor = SKColor.white
         ruleLabel.horizontalAlignmentMode = .left
         ruleLabel.position = CGPoint(x: -180 , y: frame.midY - 200)
         ruleLabel.zPosition = 100
-        
         addChild(ruleLabel)
-        
-        
-        
+     
         play.position = CGPoint(x: frame.midX, y: frame.midY - 100)
-        
         play.zPosition = 2
         
         self.addChild(play)
@@ -389,8 +357,10 @@ class GameScene: SKScene, ObservableObject {
         
         let actionFreezeMovedown = SKAction.move(to: CGPoint(x: frame.midX, y: frame.midY - 800), duration: 0.7)
         // 3
-        let sequence = SKAction.sequence([actionFreezeMoveUp, actionWait, actionFreezeMovedown])
+        let actionRemoveFreezeMovedown = SKAction.removeFromParent()
         // 4
+        let sequence = SKAction.sequence([actionFreezeMoveUp, actionWait, actionFreezeMovedown, actionRemoveFreezeMovedown])
+        // 5
         freezeMessage.run(sequence)
         
         
@@ -409,14 +379,14 @@ class GameScene: SKScene, ObservableObject {
         
         let actiontrashMovedown = SKAction.move(to: CGPoint(x: frame.midX, y: frame.midY - 800), duration: 1.0)
         // 3
-        let sequenceTrash = SKAction.sequence([actiontrashMoveUp, actiontrashWait, actiontrashMovedown])
+        let actionRemovetrash = SKAction.removeFromParent()
         // 4
+        let sequenceTrash = SKAction.sequence([actiontrashMoveUp, actiontrashWait, actiontrashMovedown, actionRemovetrash])
+        // 5
         trashMessage.run(sequenceTrash)
         
        
     }
-    
-    
     
     
     func showUnFreezeMessage() {
@@ -436,8 +406,10 @@ class GameScene: SKScene, ObservableObject {
         
         let actionUnFreezeMovedown = SKAction.move(to: CGPoint(x: frame.midX, y: frame.midY - 800), duration: 0.7)
         // 3
-        let sequenceUnFreeze = SKAction.sequence([actionUnFreezeMoveUp, actionWaitUnFreeze, actionUnFreezeMovedown])
+        let actionRemoveUnFreezeMovedown = SKAction.removeFromParent()
         // 4
+        let sequenceUnFreeze = SKAction.sequence([actionUnFreezeMoveUp, actionWaitUnFreeze, actionUnFreezeMovedown, actionRemoveUnFreezeMovedown])
+        // 5
         unFreezeMessage.run(sequenceUnFreeze)
         
        
@@ -478,7 +450,7 @@ class GameScene: SKScene, ObservableObject {
         bubblesCatch = 0
         bubbleLabel.text = "\(bubblesCatch)"
         timerLabel.text =  "\(startTime)"
-        groups.removeAll()
+        playerNameArr.removeAll()
         for enemy in arrplayer {
             enemy.removeFromParent()
             
@@ -490,6 +462,7 @@ class GameScene: SKScene, ObservableObject {
         vase2.removeFromParent()
         meat.removeFromParent()
         playerTang.removeFromParent()
+        mainTangNumber.removeFromParent()
         
     }
     
@@ -520,7 +493,7 @@ class GameScene: SKScene, ObservableObject {
         for int in 1...nrOfBubbles where int < nrOfBubbles {
             
             
-            moveBackground()
+            populateStage()
             number += randomCount
             
             
@@ -535,54 +508,43 @@ class GameScene: SKScene, ObservableObject {
     
     
     func createTrash() {
-        
 
         barrel.position = CGPoint(x: -150, y: -350)
         barrel.zPosition = 4
         barrel.name = "barrel"
         self.addChild(barrel)
-        
 
         vase.position = CGPoint(x: -50, y: -350)
         vase.zPosition = 4
         vase.name = "vase"
         self.addChild(vase)
-        
 
         vase2.position = CGPoint(x: 50, y: -350)
         vase2.zPosition = 4
         vase2.name = "vase2"
         self.addChild(vase2)
-        
 
         meat.position = CGPoint(x: 150, y: -350)
         meat.zPosition = 4
         meat.name = "meat"
         self.addChild(meat)
-        
-        
-        
+  
     }
     
     
     func createTangFish() {
         
-        
-        
-        
+        let randomNumber = Int.random(in: 1...20) + 1
         let randomX = CGFloat.random(in: -100...100)
         let randomY = CGFloat.random(in: -300...5)
         
-        let mainTangNumber:SKLabelNode = SKLabelNode(fontNamed: "Arial")
-
+      
 
         mainTangNumber.fontSize = 28
         mainTangNumber.verticalAlignmentMode = .center
         mainTangNumber.fontColor = SKColor.black
-        mainTangNumber.text = String(number)
+        mainTangNumber.text = String(randomNumber)
         mainTangNumber.zPosition = 3
-        
-        
 
         playerTang.position = CGPoint(x: randomX, y: randomY)
         playerTang.zPosition = 4
@@ -591,42 +553,31 @@ class GameScene: SKScene, ObservableObject {
         playerTang.addChild(mainTangNumber)
         
         self.addChild(playerTang)
-       
-       
+         
         
     }
     
     
-    func moveBackground() {
-        
-
+    func populateStage() {
 
         let randomX = CGFloat.random(in: -160...160)
         let randomY = CGFloat.random(in: -370...5)
-        
-        let mainShip:SKLabelNode = SKLabelNode(fontNamed: "Arial")
-        
+        let bubbleNumberText:SKLabelNode = SKLabelNode(fontNamed: "Arial")
 
-        mainShip.fontSize = 40
-        mainShip.verticalAlignmentMode = .center
-        mainShip.fontColor = SKColor.black
-        mainShip.text = String(number)
-        mainShip.zPosition = 3
-        
-        
+        bubbleNumberText.fontSize = 40
+        bubbleNumberText.verticalAlignmentMode = .center
+        bubbleNumberText.fontColor = SKColor.black
+        bubbleNumberText.text = String(number)
+        bubbleNumberText.zPosition = 3
+
        let player: SKSpriteNode = SKSpriteNode(imageNamed: "horse")
         player.position = CGPoint(x: randomX, y: randomY)
         player.zPosition = 4
         player.name = String(number)
-
-        player.addChild(mainShip)
-        
+        player.addChild(bubbleNumberText)
         self.addChild(player)
-       
-   
-//        print(number)
-        
-        groups.append(player.name!)
+
+        playerNameArr.append(player.name!)
         arrplayer.append(player)
 //
     }
@@ -657,25 +608,21 @@ class GameScene: SKScene, ObservableObject {
             
             startTheTimer()
             hideStartButton()
-            
-           
-
 //
         }
         
-        
-        
-        
+         
         let touchTang = atPoint (pos)
         
         if touchTang.name == "tang"{
             
            
             touchTang.removeFromParent()
-            freezeASA()
-            print("tang")
             createTrash()
-//            showFreezeMessage()
+            if onAsaState == true {
+                onAsaState = false
+                freezeASA()
+            }
 //
         }
         
@@ -683,8 +630,7 @@ class GameScene: SKScene, ObservableObject {
         let touchBarrel = atPoint (pos)
         
         if touchBarrel.name == "barrel"{
-            
-           
+
             touchBarrel.removeFromParent()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
@@ -696,7 +642,6 @@ class GameScene: SKScene, ObservableObject {
         let touchvase = atPoint (pos)
         
         if touchvase.name == "vase"{
-            
             
             touchvase.removeFromParent()
             unfreezeNumber = unfreezeNumber + 1
@@ -710,7 +655,6 @@ class GameScene: SKScene, ObservableObject {
         
         if touchvase2.name == "vase2"{
             
-            
             touchvase2.removeFromParent()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
@@ -723,7 +667,6 @@ class GameScene: SKScene, ObservableObject {
         
         if touchmeat.name == "meat"{
             
-            
             touchmeat.removeFromParent()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
@@ -731,23 +674,18 @@ class GameScene: SKScene, ObservableObject {
             //
         }
         
-        
-        
-   
+  
         
         let touchedN = nodes(at: pos)
         for touchedNode in touchedN {
             
             //
             
-            if touchedNode.name == groups.last {
-                //                print("teste")
+            if touchedNode.name == playerNameArr.last {
+                
                 touchedNode.removeFromParent()
-                
-                
-                groups.removeLast()
-                
-                
+                playerNameArr.removeLast()
+     
                 bubblesCatch = bubblesCatch + 1
                 
                 bubbleLabel.text = "\(bubblesCatch)"
@@ -762,36 +700,32 @@ class GameScene: SKScene, ObservableObject {
                     
                    
                 }
-                
-        
-                
-                if groups.isEmpty {
-                    
-                    
+      
+                if playerNameArr.isEmpty {
+                    playerTang.removeFromParent()
+                    mainTangNumber.removeFromParent()
+                    barrel.removeFromParent()
+                    vase.removeFromParent()
+                    vase2.removeFromParent()
+                    meat.removeFromParent()
                     createPlayer()
                     nrOfBubbles = nrOfBubbles+1
                     number = 0
-                    
+                    tangIsShowing = false
                     if tangIsShowing == false {
                         createTangFish()
                         tangIsShowing = true
                     }
-                    
-                    
                     
                 }
                 
                 return
                 
                 
-            }else if touchedNode.name != groups.last && touchedNode.name != "background" && touchedNode.name != "playBtn" && touchedNode.name != "tang" && touchedNode.name != nil && touchedNode.name != "barrel" && touchedNode.name != "vase" && touchedNode.name != "vase2" && touchedNode.name != "meat" {
+            }else if touchedNode.name != playerNameArr.last && touchedNode.name != "background" && touchedNode.name != "playBtn" && touchedNode.name != "tang" && touchedNode.name != nil && touchedNode.name != "barrel" && touchedNode.name != "vase" && touchedNode.name != "vase2" && touchedNode.name != "meat" {
 //                print("fail")
                 print(touchedNode.name as Any)
-                
-                
                 theTimer.invalidate()
-                
-                
                 gameOver()
                 //
                 
