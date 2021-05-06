@@ -7,12 +7,9 @@
 
 import Foundation
 import Combine
-
 import SwiftUI
 import SpriteKit
 import swift_algorand_sdk
-
-
 
 class GameScene: SKScene, ObservableObject {
     
@@ -101,7 +98,6 @@ class GameScene: SKScene, ObservableObject {
         @State var defaultFrozen = false
     
   
-       
     
     override func didMove(to view: SKView) {
         
@@ -124,21 +120,17 @@ class GameScene: SKScene, ObservableObject {
             print(startTime)
         }
         
-       
         setupStartButton()
         
         background.position = CGPoint(x: 0, y: 0)
         background.name = "background"
         addChild(background)
-        
-        
        
         timerCount.position = CGPoint(x: -130, y: 80)
         timerCount.zPosition = 90
         timerCount.name = "timerCount"
         addChild(timerCount)
         
-
         timerLabel.text = "\(startTime)"
         timerLabel.fontSize = 24
        
@@ -148,13 +140,11 @@ class GameScene: SKScene, ObservableObject {
         timerLabel.zPosition = 100
         addChild(timerLabel)
         
-
         bubbleCount.position = CGPoint(x: 0, y: 80)
         bubbleCount.zPosition = 90
         bubbleCount.name = "timerCount"
         addChild(bubbleCount)
         
-    
         bubbleLabel.text = "\(bubblesCatch)"
         bubbleLabel.fontSize = 24
        
@@ -164,14 +154,11 @@ class GameScene: SKScene, ObservableObject {
         bubbleLabel.zPosition = 100
         addChild(bubbleLabel)
       
-        
-        
         totalBubbleCount.position = CGPoint(x: 125, y: 80)
         totalBubbleCount.zPosition = 99
         totalBubbleCount.name = "timerCount"
         addChild(totalBubbleCount)
         
-    
         totalBubbleLabel.text = "\(totalBubblesCatch)"
         totalBubbleLabel.fontSize = 24
        
@@ -182,10 +169,6 @@ class GameScene: SKScene, ObservableObject {
         addChild(totalBubbleLabel)
         
        
-        
-        
-        
-      
     }
     
   
@@ -209,25 +192,19 @@ class GameScene: SKScene, ObservableObject {
         let algodClient=AlgodClient(host: ALGOD_API_ADDR, port: ALGOD_API_PORT, token: ALGOD_API_TOKEN)
         algodClient.set(key: "X-API-KeY")
         
-  
-        
         do {
             
             let mnemonic1 = "digital special special special special special special special special special special special special special special special special special special special special special special special special"
             
             let account1 = try Account(mnemonic1)
-          
-            
+           
             let senderAddress1 = account1.getAddress()
             
             let mnemonic3 = "diet special special special special special special special special special special special special special special special special special special special special special special special special"
             
             let account3 = try Account(mnemonic3)
-            
-            
+
             let senderAddress3 = account3.getAddress()
-            
-            
             
             algodClient.transactionParams().execute(){paramResponse in
                 if(!(paramResponse.isSuccessful)){
@@ -235,27 +212,17 @@ class GameScene: SKScene, ObservableObject {
                     print("passou")
                     return;
                 }
-                
-                
                
                 let tx = Transaction.assetFreezeTransactionBuilder()
                     
                     .setSender(senderAddress1)
                     .freezeTarget(freezeTarget:senderAddress3)
                     .freezeState(freezeState: self.freezeAsaState)
-                    
-                    
                     .assetIndex(assetIndex: Int64((self.defaults.integer(forKey: "AssetId"))))
-                    
                     .suggestedParams(params:paramResponse.data!).build();
-                //
+
+//                print(Int64((self.defaults.integer(forKey: "AssetId"))))
                 
-                //
-                
-                print(Int64((self.defaults.integer(forKey: "AssetId"))))
-                
-                //
-                //                //
                 let signedTrans=account1.signTransaction(tx: tx)
                 //
                 let encodedTx:[Int8]=CustomEncoder.encodeToMsgPack(signedTrans)
@@ -275,17 +242,12 @@ class GameScene: SKScene, ObservableObject {
                         }
                         
                         
-                       
-                        //
                     }else{
                         print("freeze Fail!")
                         //
                     }
                     
                 }
-                
-                
-             
                 
             }//paramresponse
             
@@ -415,8 +377,6 @@ class GameScene: SKScene, ObservableObject {
        
     }
     
-
-    
     
     func showStartButton() {
         play.run(SKAction.fadeIn(withDuration: 0.25))
@@ -430,8 +390,6 @@ class GameScene: SKScene, ObservableObject {
     
     func gameOver(){
         
-        
-        
         if defaults.object(forKey: "increaseTime") != nil {
             
             startTime = defaults.integer(forKey: "increaseTime")
@@ -441,7 +399,7 @@ class GameScene: SKScene, ObservableObject {
         }else  {
             
             startTime = secondsLeft
-            print(startTime)
+//            print(startTime)
         }
         
         showStartButton()
@@ -457,13 +415,19 @@ class GameScene: SKScene, ObservableObject {
         }
         
         tangIsShowing = false
+        self.cleanElements()
+        
+    }
+    
+    
+    func cleanElements() {
+        
         barrel.removeFromParent()
         vase.removeFromParent()
         vase2.removeFromParent()
         meat.removeFromParent()
         playerTang.removeFromParent()
         mainTangNumber.removeFromParent()
-        
     }
     
     
@@ -499,11 +463,6 @@ class GameScene: SKScene, ObservableObject {
             
         }
         
-        
-
-
-       
-        
     }
     
     
@@ -538,8 +497,6 @@ class GameScene: SKScene, ObservableObject {
         let randomX = CGFloat.random(in: -100...100)
         let randomY = CGFloat.random(in: -300...5)
         
-      
-
         mainTangNumber.fontSize = 28
         mainTangNumber.verticalAlignmentMode = .center
         mainTangNumber.fontColor = SKColor.black
@@ -581,12 +538,9 @@ class GameScene: SKScene, ObservableObject {
         arrplayer.append(player)
 //
     }
-        
- 
-    
+         
     override func update(_ currentTime: TimeInterval) {
 
-        
     }
     
     
@@ -608,7 +562,7 @@ class GameScene: SKScene, ObservableObject {
             
             startTheTimer()
             hideStartButton()
-//
+
         }
         
          
@@ -623,7 +577,7 @@ class GameScene: SKScene, ObservableObject {
                 onAsaState = false
                 freezeASA()
             }
-//
+
         }
         
 //   -----Barrel touch -----------//
@@ -634,8 +588,7 @@ class GameScene: SKScene, ObservableObject {
             touchBarrel.removeFromParent()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
-//            print("tang")
-//
+
         }
         
         //   -----Vase touch -----------//
@@ -646,8 +599,7 @@ class GameScene: SKScene, ObservableObject {
             touchvase.removeFromParent()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
-//            print("tang")
-            //
+
         }
         
         //   -----Vase2 touch -----------//
@@ -658,8 +610,7 @@ class GameScene: SKScene, ObservableObject {
             touchvase2.removeFromParent()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
-//            print("tang")
-            //
+
         }
         
         //   -----Vase2 touch -----------//
@@ -670,16 +621,14 @@ class GameScene: SKScene, ObservableObject {
             touchmeat.removeFromParent()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
-//            print("tang")
-            //
+
         }
         
   
         
         let touchedN = nodes(at: pos)
         for touchedNode in touchedN {
-            
-            //
+           
             
             if touchedNode.name == playerNameArr.last {
                 
@@ -702,12 +651,8 @@ class GameScene: SKScene, ObservableObject {
                 }
       
                 if playerNameArr.isEmpty {
-                    playerTang.removeFromParent()
-                    mainTangNumber.removeFromParent()
-                    barrel.removeFromParent()
-                    vase.removeFromParent()
-                    vase2.removeFromParent()
-                    meat.removeFromParent()
+                   
+                    self.cleanElements()
                     createPlayer()
                     nrOfBubbles = nrOfBubbles+1
                     number = 0
