@@ -177,7 +177,7 @@ class GameScene: SKScene, ObservableObject {
        
     }
     
-  
+    // MARK: - UnFreezeASA
     
     func UnfreezeASA(){
         
@@ -264,7 +264,7 @@ class GameScene: SKScene, ObservableObject {
         print("algo buy!")
         
     }
-
+    // MARK: - addTimeBonus
     
     func addTimeBonus() {
         
@@ -274,13 +274,15 @@ class GameScene: SKScene, ObservableObject {
         self.timerLabel.text = "\(self.startTime)"
      
     }
+    // MARK: - UnlockAsset
     
     func unlockAsset() {
        
         theAssetState.add(assetStateChange: false)
         self.horseAsset = false
     }
-  
+    // MARK: - Animations
+    
     func setupStartButton() {
         
         ruleLabel.text = "Touch the Seahorse balls in descending order."
@@ -393,6 +395,7 @@ class GameScene: SKScene, ObservableObject {
         ruleLabel.run(SKAction.fadeOut(withDuration: 0.25))
     }
     
+    // MARK: - Game Over
     
     func gameOver(){
         
@@ -436,6 +439,7 @@ class GameScene: SKScene, ObservableObject {
         mainTangNumber.removeFromParent()
     }
     
+    // MARK: - Timer
     
     func startTheTimer() {
         
@@ -456,6 +460,8 @@ class GameScene: SKScene, ObservableObject {
         }
         //
     }
+    
+    // MARK: - Create Game Characters
     
     func createPlayer(){
         
@@ -520,6 +526,8 @@ class GameScene: SKScene, ObservableObject {
         
     }
     
+    // MARK: - Play Sounds
+    
     func playPop() {
     let removeFromParent = SKAction.removeFromParent()
     let actionPopGroup = SKAction.group([playPopSound, removeFromParent])
@@ -539,7 +547,7 @@ class GameScene: SKScene, ObservableObject {
     }
     
     
-    
+    // MARK: - SeaHorse Array
     
     func populateStage() {
 
@@ -569,6 +577,7 @@ class GameScene: SKScene, ObservableObject {
 
     }
     
+    // MARK: - Touch Functions
     
     func touchDown(atPoint pos : CGPoint) {
         
