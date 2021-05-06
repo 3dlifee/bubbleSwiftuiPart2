@@ -62,6 +62,12 @@ class GameScene: SKScene, ObservableObject {
     // -------music//
     
     let musicNode = SKAudioNode(fileNamed: "PoolParty.wav")
+    private let playPopSound = SKAction.playSoundFileNamed("pop.mp3",
+    waitForCompletion: false)
+    private let playErrorSound = SKAction.playSoundFileNamed("Error.wav",
+    waitForCompletion: false)
+    private let playTrashSound = SKAction.playSoundFileNamed("trash.wav",
+    waitForCompletion: false)
     
     var arrplayer :[SKSpriteNode] = [SKSpriteNode]()
     var playerNameArr = [String]()
@@ -514,6 +520,26 @@ class GameScene: SKScene, ObservableObject {
         
     }
     
+    func playPop() {
+    let removeFromParent = SKAction.removeFromParent()
+    let actionPopGroup = SKAction.group([playPopSound, removeFromParent])
+    self.run(actionPopGroup)
+    }
+    
+    func playError() {
+    let removeFromParent = SKAction.removeFromParent()
+    let actionErrorGroup = SKAction.group([playErrorSound, removeFromParent])
+    self.run(actionErrorGroup)
+    }
+    
+    func playTrash() {
+    let removeFromParent = SKAction.removeFromParent()
+    let actionTrashGroup = SKAction.group([playTrashSound, removeFromParent])
+    self.run(actionTrashGroup)
+    }
+    
+    
+    
     
     func populateStage() {
 
@@ -572,6 +598,7 @@ class GameScene: SKScene, ObservableObject {
             
            
             touchTang.removeFromParent()
+            self.playError()
             createTrash()
             if onAsaState == true {
                 onAsaState = false
@@ -586,6 +613,7 @@ class GameScene: SKScene, ObservableObject {
         if touchBarrel.name == "barrel"{
 
             touchBarrel.removeFromParent()
+            self.playTrash()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
 
@@ -597,6 +625,7 @@ class GameScene: SKScene, ObservableObject {
         if touchvase.name == "vase"{
             
             touchvase.removeFromParent()
+            self.playTrash()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
 
@@ -608,6 +637,7 @@ class GameScene: SKScene, ObservableObject {
         if touchvase2.name == "vase2"{
             
             touchvase2.removeFromParent()
+            self.playTrash()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
 
@@ -619,6 +649,7 @@ class GameScene: SKScene, ObservableObject {
         if touchmeat.name == "meat"{
             
             touchmeat.removeFromParent()
+            self.playTrash()
             unfreezeNumber = unfreezeNumber + 1
             UnfreezeASA()
 
@@ -642,6 +673,8 @@ class GameScene: SKScene, ObservableObject {
                 totalBubblesCatch = bubblesCatch
                 
                 totalBubbleLabel.text = "\(totalBubblesCatch)"
+                
+                self.playPop()
                 
                 if totalBubblesCatch >= 15 {
                     
@@ -673,7 +706,6 @@ class GameScene: SKScene, ObservableObject {
                 theTimer.invalidate()
                 gameOver()
                 //
-                
                 
                 
             }
