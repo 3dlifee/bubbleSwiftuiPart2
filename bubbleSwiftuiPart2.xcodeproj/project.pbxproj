@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F347821D2643EC0900E97D46 /* pop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F347821C2643EC0900E97D46 /* pop.mp3 */; };
+		F347821F2643EE7D00E97D46 /* Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = F347821E2643EE7D00E97D46 /* Error.wav */; };
+		F34782212643EFE100E97D46 /* trash.wav in Resources */ = {isa = PBXBuildFile; fileRef = F34782202643EFE100E97D46 /* trash.wav */; };
+		F34782282643F3DE00E97D46 /* PoolParty.wav in Resources */ = {isa = PBXBuildFile; fileRef = F347822A2643F3DE00E97D46 /* PoolParty.wav */; };
 		F38389DA2631B87F00EF5075 /* bubbleSwiftuiPart2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38389D92631B87F00EF5075 /* bubbleSwiftuiPart2App.swift */; };
 		F38389DC2631B87F00EF5075 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38389DB2631B87F00EF5075 /* ContentView.swift */; };
 		F38389DE2631B88100EF5075 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F38389DD2631B88100EF5075 /* Assets.xcassets */; };
@@ -14,9 +18,15 @@
 		F38389EA2631B89800EF5075 /* bubbleGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38389E92631B89800EF5075 /* bubbleGame.swift */; };
 		F38389ED2631B8A800EF5075 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38389EC2631B8A800EF5075 /* GameScene.swift */; };
 		F38389F12631B91000EF5075 /* swift-algorand-sdk in Frameworks */ = {isa = PBXBuildFile; productRef = F38389F02631B91000EF5075 /* swift-algorand-sdk */; };
+		F3D1A19B2648387100D586FC /* accounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D1A19A2648387100D586FC /* accounts.swift */; };
+		F3D1A19D2648388400D586FC /* defaultsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D1A19C2648388400D586FC /* defaultsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F347821C2643EC0900E97D46 /* pop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pop.mp3; sourceTree = "<group>"; };
+		F347821E2643EE7D00E97D46 /* Error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Error.wav; sourceTree = "<group>"; };
+		F34782202643EFE100E97D46 /* trash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = trash.wav; sourceTree = "<group>"; };
+		F359AD52264408330014B246 /* en */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = en; path = en.lproj/PoolParty.wav; sourceTree = "<group>"; };
 		F38389D62631B87F00EF5075 /* bubbleSwiftuiPart2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bubbleSwiftuiPart2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F38389D92631B87F00EF5075 /* bubbleSwiftuiPart2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bubbleSwiftuiPart2App.swift; sourceTree = "<group>"; };
 		F38389DB2631B87F00EF5075 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -25,6 +35,8 @@
 		F38389E22631B88100EF5075 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F38389E92631B89800EF5075 /* bubbleGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bubbleGame.swift; sourceTree = "<group>"; };
 		F38389EC2631B8A800EF5075 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		F3D1A19A2648387100D586FC /* accounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accounts.swift; sourceTree = "<group>"; };
+		F3D1A19C2648388400D586FC /* defaultsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +74,9 @@
 				F38389DB2631B87F00EF5075 /* ContentView.swift */,
 				F38389E92631B89800EF5075 /* bubbleGame.swift */,
 				F38389EC2631B8A800EF5075 /* GameScene.swift */,
+				F3D1A19A2648387100D586FC /* accounts.swift */,
+				F3D1A19C2648388400D586FC /* defaultsModel.swift */,
+				F39210882642A35C001D2EBD /* music */,
 				F38389DD2631B88100EF5075 /* Assets.xcassets */,
 				F38389E22631B88100EF5075 /* Info.plist */,
 				F38389DF2631B88100EF5075 /* Preview Content */,
@@ -75,6 +90,17 @@
 				F38389E02631B88100EF5075 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F39210882642A35C001D2EBD /* music */ = {
+			isa = PBXGroup;
+			children = (
+				F347822A2643F3DE00E97D46 /* PoolParty.wav */,
+				F347821E2643EE7D00E97D46 /* Error.wav */,
+				F347821C2643EC0900E97D46 /* pop.mp3 */,
+				F34782202643EFE100E97D46 /* trash.wav */,
+			);
+			path = music;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,8 +166,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F347821D2643EC0900E97D46 /* pop.mp3 in Resources */,
 				F38389E12631B88100EF5075 /* Preview Assets.xcassets in Resources */,
 				F38389DE2631B88100EF5075 /* Assets.xcassets in Resources */,
+				F34782282643F3DE00E97D46 /* PoolParty.wav in Resources */,
+				F347821F2643EE7D00E97D46 /* Error.wav in Resources */,
+				F34782212643EFE100E97D46 /* trash.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,12 +184,25 @@
 			files = (
 				F38389DC2631B87F00EF5075 /* ContentView.swift in Sources */,
 				F38389EA2631B89800EF5075 /* bubbleGame.swift in Sources */,
+				F3D1A19B2648387100D586FC /* accounts.swift in Sources */,
+				F3D1A19D2648388400D586FC /* defaultsModel.swift in Sources */,
 				F38389ED2631B8A800EF5075 /* GameScene.swift in Sources */,
 				F38389DA2631B87F00EF5075 /* bubbleSwiftuiPart2App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F347822A2643F3DE00E97D46 /* PoolParty.wav */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F359AD52264408330014B246 /* en */,
+			);
+			name = PoolParty.wav;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F38389E32631B88100EF5075 /* Debug */ = {

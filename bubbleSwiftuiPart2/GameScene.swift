@@ -200,15 +200,11 @@ class GameScene: SKScene, ObservableObject {
         
         do {
             
-            let mnemonic1 = "digital special special special special special special special special special special special special special special special special special special special special special special special special"
-            
-            let account1 = try Account(mnemonic1)
+            let account1 = try Account(defaults.string(forKey: "mnemonic1") ?? "")
            
             let senderAddress1 = account1.getAddress()
             
-            let mnemonic3 = "diet special special special special special special special special special special special special special special special special special special special special special special special special"
-            
-            let account3 = try Account(mnemonic3)
+            let account3 = try Account( defaults.string(forKey: "mnemonic3") ?? "")
 
             let senderAddress3 = account3.getAddress()
             
@@ -227,7 +223,7 @@ class GameScene: SKScene, ObservableObject {
                     .assetIndex(assetIndex: Int64((self.defaults.integer(forKey: "AssetId"))))
                     .suggestedParams(params:paramResponse.data!).build();
 
-//                print(Int64((self.defaults.integer(forKey: "AssetId"))))
+               
                 
                 let signedTrans=account1.signTransaction(tx: tx)
                 //
